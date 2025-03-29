@@ -26,6 +26,8 @@ This project models an infinitely scalable memristor crossbar array in Python to
 
 **Example Output:**
 
+Initalization of Memristor Array:
+
 Enter number of responses: _4_
 
 Enter number of challenges: _4_
