@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import math
 import time
+import os
+
 
 class Memristor:
     def __init__(self, params):
@@ -143,6 +145,7 @@ def generate_and_save_memristors(file_type):
     else:
         raise ValueError("Unsupported file type. Choose either 'csv' or 'excel'.")
 
+    print("Array of {} X {} Memristors created inputing {} challenges and outputting {} responses\n".format(row,col,cha,res))
 
 
 def write():
@@ -196,21 +199,19 @@ def thresh(ResNo):
     for i in range(row):
         R1f += 1/R1[i]
     R1f = 1/R1f
-    print(R1f)
+    print("Total Resistance of Coloumn 1 for Response Bit {}: ".format(ResNo+1),R1f)
 
 
     for i in range(row):
         R2f += 1/R2[i]
     R2f = 1/R2f
-    print(R2f)
+    print("Total Resistance of Coloumn 2 for Response Bit {}: ".format(ResNo+1),R1f)
 
     if R2f > R1f:
         return 0
     else:
         return 1
 
-
-            
 def read():
     Vrd = 0.9       #Read Voltage
     Vbt = 0.5       #Voltage Threshold for Buffer
@@ -220,6 +221,7 @@ def read():
     Responses = []
     for i in range(int(col/2)):
         Responses.append(thresh(i))
+
     print("Response Bits are: ", Responses)
 
 def reset():
@@ -227,11 +229,14 @@ def reset():
         mem = Memristor(memristors[i])
         mem.reset()
         memristors[i]["x0"] = mem.x0
+    print("\nAll Memristors reset to HRS.\n")
 
 
 def read_file():
     global memristors,row,col
     file_path = 'memristor_parameters.xlsx'
+    if not os.path.exists(file_path):
+        generate_and_save_memristors('excel')
     data = pd.read_excel(file_path)
     memristors = []
     for i, row in data.iterrows():
