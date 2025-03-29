@@ -297,7 +297,7 @@ while g == 1:
     print("3. Reset")
     print("4. Create New Array")
     print("5. Exit..")
-    opt = int(input("Choose Conversion: "))
+    opt = int(input("Choose Mode: "))
 
     if opt == 1:
         write()
